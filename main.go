@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -21,7 +20,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	beatmaps, err := ioutil.ReadDir(dir)
+	beatmaps, err := os.ReadDir(dir)
 
 	if err != nil {
 		fmt.Printf(`Could not open the directory "%s".`, dir)
@@ -36,7 +35,7 @@ func main() {
 		}
 
 		beatmapDir := filepath.Join(dir, beatmap.Name())
-		files, err := ioutil.ReadDir(beatmapDir)
+		files, err := os.ReadDir(beatmapDir)
 
 		if err != nil {
 			panic(err)
@@ -50,7 +49,7 @@ func main() {
 				continue
 			}
 
-			osuContent, err := ioutil.ReadFile(filepath.Join(beatmapDir, file.Name()))
+			osuContent, err := os.ReadFile(filepath.Join(beatmapDir, file.Name()))
 
 			if err != nil {
 				panic(err)
@@ -73,14 +72,21 @@ func main() {
 				continue
 			}
 
+			fmt.Println(filepath.Join(beatmap.Name(), file.Name()))
+
 			err := os.RemoveAll(filepath.Join(beatmapDir, file.Name()))
 
 			if err != nil {
 				panic(err)
 			}
 
-			fmt.Println(filepath.Join(beatmap.Name(), file.Name()))
-			savedSpace += file.Size()
+			info, err := file.Info()
+
+			if err != nil {
+				panic(err)
+			}
+
+			savedSpace += info.Size()
 		}
 	}
 
