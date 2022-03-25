@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	getopt.StringLong("dir", 'd', "", "the osu! directory")
+	getopt.StringLong("dir", 'd', "", "path to osu! beatmaps directory")
 	getopt.Parse()
 
 	dir := getopt.GetValue("dir")
