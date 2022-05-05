@@ -69,9 +69,7 @@ func main() {
 
 			fmt.Println(filepath.Join(beatmap.Name(), file.Name()))
 
-			err := os.RemoveAll(filepath.Join(beatmapDir, file.Name()))
-
-			if err != nil {
+			if err := os.RemoveAll(filepath.Join(beatmapDir, file.Name())); err != nil {
 				panic(err)
 			}
 
