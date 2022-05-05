@@ -5,18 +5,13 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/pborman/getopt/v2"
 )
 
 func main() {
-	getopt.StringLong("dir", 'd', "", "path to osu! beatmaps directory")
-	getopt.Parse()
-
-	dir := getopt.GetValue("dir")
+	dir := strings.Join(os.Args[1:], " ")
 
 	if dir == "" {
-		getopt.Usage()
+		fmt.Print("Please provide your osu! beatmaps directory.")
 		os.Exit(1)
 	}
 
