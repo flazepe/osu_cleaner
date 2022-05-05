@@ -59,16 +59,16 @@ func main() {
 				line = strings.TrimSpace(line)
 
 				if strings.HasPrefix(line, "AudioFilename: ") {
-					importantFiles[line[15:]] = true
+					importantFiles[strings.ToLower(line[15:])] = true
 				} else if strings.HasPrefix(line, `0,0,"`) && strings.HasSuffix(line, `",0,0`) {
-					importantFiles[line[5:len(line)-5]] = true
+					importantFiles[strings.ToLower(line[5:len(line)-5])] = true
 				}
 			}
 		}
 
 		// Remove all unimportant files and directories
 		for _, file := range files {
-			if strings.HasSuffix(file.Name(), ".osu") || importantFiles[file.Name()] {
+			if strings.HasSuffix(file.Name(), ".osu") || importantFiles[strings.ToLower(file.Name())] {
 				continue
 			}
 
