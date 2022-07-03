@@ -55,8 +55,14 @@ func main() {
 
 				if strings.HasPrefix(line, "AudioFilename: ") {
 					importantFiles[strings.ToLower(line[15:])] = true
-				} else if strings.HasPrefix(line, `0,0,"`) && strings.HasSuffix(line, `",0,0`) {
-					importantFiles[strings.ToLower(line[5:len(line)-5])] = true
+				} else if strings.HasPrefix(line, "0,0,") {
+					filename := strings.Split(line, ",")[2]
+
+					if strings.HasPrefix(filename, `"`) {
+						filename = filename[1 : len(filename)-1]
+					}
+
+					importantFiles[strings.ToLower(filename)] = true
 				}
 			}
 		}
